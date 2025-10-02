@@ -38,6 +38,7 @@ cd python-practice
     - `variables`.
     - value `types`.
     - how to handle `numbers` (integers and float), `strings` and `lists`.
+    - functions, how to handle default values and keyword arguments.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
