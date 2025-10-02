@@ -41,6 +41,10 @@ cd python-practice
     - `functions`, how to handle `default values` and `keyword arguments`.
     - variable scope and differences between local and global types.
     - using `Doc strings` to document code.
+  - Loops (2-loops folder)
+    - Understanding how to use `for` loops.
+    - Understanding how to use `while` loops.
+    - Understanding how to use `if/else` and `elif` conditionals.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
