@@ -1,0 +1,17 @@
+blockchain
+distributed data storage, each one is a chain/list of data storage linked with the one before
+is not limited to be used in transactions (like the case of bitcoin)
+
+Cryptocurrency > major thing to be used in blockchain
+data storages are in blocks of transactions
+
+REPL
+- Read > read the values
+- Evaluate > evaluate the logic
+- Print > print the result
+- Loop > wait for the next line to be executed
+
+Types of data I will be using during this course
+- numbers > integers and floats
+- strings
+- booleans
