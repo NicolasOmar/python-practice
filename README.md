@@ -38,7 +38,9 @@ cd python-practice
     - `variables`.
     - value `types`.
     - how to handle `numbers` (integers and float), `strings` and `lists`.
-    - functions, how to handle default values and keyword arguments.
+    - `functions`, how to handle `default values` and `keyword arguments`.
+    - variable scope and differences between local and global types.
+    - using `Doc strings` to document code.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
