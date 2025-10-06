@@ -47,6 +47,7 @@ cd python-practice
     - Understanding how to use `if/else` and `elif` conditionals.
     - Understanding how to use `break` and `continue` words.
     - Undesrtanding the usage of `None` value.
+    - Undesrtanding the `not` keyword.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |

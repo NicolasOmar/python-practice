@@ -9,12 +9,14 @@ def take_last_blockchain_value():
     # In case that statement is true, it will return None, a special data type that represents the absence of a value (like null in javascript)
     if len(my_blockchain) < 1:
         return None
+    
     return my_blockchain[-1]
 
 def add_block(transaction_value, last_transaction):
     # To update the logic related to the None value, it will asign a default value of [1] to last_transaction in case its value is abscent (None)
     if last_transaction is None:
         last_transaction = [1]
+        
     my_blockchain.append([last_transaction, transaction_value])
     print(my_blockchain)
 
@@ -29,12 +31,31 @@ def return_all_blocks():
     for block in my_blockchain:
         print('Outputting block: ' + str(block))
 
+def verify_chain():
+    """ The function helps to verify the integrity of the blockchain by checking if each block's previous hash matches the hash of the previous block. """
+    block_index = 0
+    is_valid_chain = True
+
+    for block in my_blockchain:
+        if block_index == 0:
+            # In case you are in the first index, there is no need to check anything, so just continue to the next iteration (continue will skip the iteration and will continue with the next one)
+            block_index += 1
+            continue
+        # The idea in this if is that che the first element of the current block (block[0]) should be equal to the entire previous block (my_blockchain[block_index - 1])
+        elif block[0] != my_blockchain[block_index - 1]:
+            is_valid_chain = False
+            break
+
+        block_index += 1
+    return is_valid_chain
+
 # A while loop is used to execute a block of code as long as a certain condition is true
 # In this case, the true is permanenet, so the loop will run indefinitely until it is manually stopped
 while True:
     print('Please choose an option:')
     print('1: Add a new block to the blockchain')
     print('2: Output all blockchain blocks')
+    print('h: Manipulate blockchain')
     print('q: Quit')
     
     user_choice = get_user_input()
@@ -50,8 +71,16 @@ while True:
     elif user_choice == 'q':
         # Break is used to exit the loop (in this case, to quit the program)
         break
+    elif user_choice == 'h':
+        if len(my_blockchain) >= 1:
+            my_blockchain[0] = [2.0]
     # The final else statement will execute a block of code if none of the previous conditions were met
     else:
         print('Invalid input, please choose a valid option')
-
+    # As a foot note, does not exists such a thing as switch statements in python (sorry about that)
+    # In this scenario, an not keyword equals '!= value', but is more readable this way
+    # There are other keywords like 'is' and 'in' that can be used in conditional statements, but it will be seen in other exercises
+    if not verify_chain():
+        print('Invalid blockchain!')
+        break
 print('Done!')
