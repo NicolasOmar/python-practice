@@ -5,9 +5,16 @@ def get_transaction_value():
     return user_input
 
 def take_last_blockchain_value():
+    # The first line above checks list/array length and ask if is less than 1 (empty list/array)
+    # In case that statement is true, it will return None, a special data type that represents the absence of a value (like null in javascript)
+    if len(my_blockchain) < 1:
+        return None
     return my_blockchain[-1]
 
-def add_block(transaction_value, last_transaction=[1]):
+def add_block(transaction_value, last_transaction):
+    # To update the logic related to the None value, it will asign a default value of [1] to last_transaction in case its value is abscent (None)
+    if last_transaction is None:
+        last_transaction = [1]
     my_blockchain.append([last_transaction, transaction_value])
     print(my_blockchain)
 
@@ -22,15 +29,13 @@ def return_all_blocks():
     for block in my_blockchain:
         print('Outputting block: ' + str(block))
 
-input_transaction_value = get_transaction_value()
-add_block(input_transaction_value)
-
 # A while loop is used to execute a block of code as long as a certain condition is true
 # In this case, the true is permanenet, so the loop will run indefinitely until it is manually stopped
 while True:
     print('Please choose an option:')
     print('1: Add a new block to the blockchain')
     print('2: Output all blockchain blocks')
+    print('q: Quit')
     
     user_choice = get_user_input()
     
@@ -42,6 +47,11 @@ while True:
     # You can list as many elif conditions as you want between the if and else statements (but there are better and cleaner ways to do this)
     elif user_choice == '2':
         return_all_blocks()
+    elif user_choice == 'q':
+        # Break is used to exit the loop (in this case, to quit the program)
+        break
     # The final else statement will execute a block of code if none of the previous conditions were met
     else:
         print('Invalid input, please choose a valid option')
+
+print('Done!')
