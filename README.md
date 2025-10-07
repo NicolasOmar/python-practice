@@ -43,6 +43,7 @@ cd python-practice
     - using `Doc strings` to document code.
   - Loops (2-loops folder)
     - Understanding how to use `for` loops.
+      - Also how to handle list index by `range` function.
     - Understanding how to use `while` loops.
     - Understanding how to use `if/else` and `elif` conditionals.
     - Understanding how to use `break` and `continue` words.
