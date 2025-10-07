@@ -30,7 +30,10 @@ cd python-practice
 ```
 
 ## How to run it
-- To be added
+To run any specific exercise, execute the following command in the project´s folder:
+```python
+python3 exercise.py # Or any .py file
+```
 
 ## Repo structure & what i learned in each exercise
 - Basics (`1-basics` folder)
@@ -40,7 +43,15 @@ cd python-practice
     - how to handle `numbers` (integers and float), `strings` and `lists`.
     - `functions`, how to handle `default values` and `keyword arguments`.
     - variable scope and differences between local and global types.
-    - using `Doc strings` to document code.
+  - Using `Doc strings` to document code.
+- Loops (`2-loops` folder)
+  - Understanding how to use `for` loops.
+    - Also how to handle list index by `range` function.
+  - Understanding how to use `while` loops.
+  - Understanding how to use `if/else` and `elif` conditionals.
+  - Understanding how to use `break` and `continue` words.
+  - Undesrtanding the usage of `None` value.
+  - Undesrtanding the `not` keyword.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
