@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/NicolasOmar/python-practice/compare/v1.0.0...v2.0.0) (2025-10-07)
+
+
+### Bug Fixes
+
+* Understand how to handle list index in a for loop with range function ([7a322dd](https://github.com/NicolasOmar/python-practice/commit/7a322ddf4b09d8701656b373540f067a2e9cd591))
+* Understanding about for and while loops as well as if/else and elif conditionals ([0fa5ec6](https://github.com/NicolasOmar/python-practice/commit/0fa5ec6d92ddd54c1955bc763f078ad8b242b7e2))
+* Understanding of keywords break and continue, as well how to use None value ([6e908ae](https://github.com/NicolasOmar/python-practice/commit/6e908ae2f24628345d365c590cb22cd28fc4b46d))
+* Understanding of the not keyword ([bc84308](https://github.com/NicolasOmar/python-practice/commit/bc8430854be3e8e4559b95145547fb259fdd6548))
+
+
+### Features
+
+* Exercise [#2](https://github.com/NicolasOmar/python-practice/issues/2). Loops project ([68e604a](https://github.com/NicolasOmar/python-practice/commit/68e604afd5be35d474f0654e8763d592412dd0bd))
+
+
+### BREAKING CHANGES
+
+* New exercise added
+
 # 1.0.0 (2025-10-02)
 
 
