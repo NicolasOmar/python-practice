@@ -8,6 +8,7 @@ print('Your name is ' + name + ' and you are ' + age + ' years old.')
 # 3) Create a function which prints ANY data (two arguments) as one string
 def print_random_data(data1, data2):
     print('The first data is ' + data1 +' and the second data is ' + data2 + '.')
+
 print_random_data('Hello', 'World')
 
 # 4) Create a function which calculates and returns the number of decades you already lived (e.g. 23 = 2 decades)
