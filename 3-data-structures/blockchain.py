@@ -7,6 +7,13 @@
     # (1, 2, 3, "honey", true)
   # A [dictionary] is mutable, not ordered, no duplicates, and uses key-value pairs. Is similar to a JavaScript object
     # {"name": "Alice", "age": 30, "city": "New York"}
+
+# Other thigs to have in mind when you are using iterables
+    # If you copy a list from another one and change any of its values inside, it will change the value in both lists because they are pointing to the same memory address
+        # That is because is copying the reference of the list, not the actual values
+        # To avoid that, you can use the LIST_NAME[:] function to create a new list with the same values
+            # copy_list = original_list[:]
+
 MINING_REWARD = 10
 genesis_block = {
     'previous_hash': '',
@@ -86,6 +93,13 @@ def take_last_blockchain_value():
     
     return my_blockchain[-1]
 
+def verify_transaction(transaction):
+    sender_balance = get_balance(transaction['sender'])
+    
+    if sender_balance >= transaction['amount']:
+        return True
+    return False
+
 def add_transaction(sender, recipient, amount=1):
     """
         Add a new transaction to the list of open transactions (which will be added to the next mined block)
@@ -101,10 +115,14 @@ def add_transaction(sender, recipient, amount=1):
         'recipient': recipient,
         'amount': amount
     }
-    open_transactions.append(new_transaction)
-    # When you add a new element to a set, if the element already exists, it will not be added again
-    participants.add(sender)
-    participants.add(recipient)
+
+    if verify_transaction(new_transaction):
+        open_transactions.append(new_transaction)
+        # When you add a new element to a set, if the element already exists, it will not be added again
+        participants.add(sender)
+        participants.add(recipient)
+    else:
+        print('Transaction failed! Not enough balance!')
     add__line()
 
 def return_all_blocks():
@@ -118,6 +136,9 @@ def get_balance(participant):
     final_balance = 0
     sent_transactions = [[tx['amount'] for tx in block['transactions'] if tx['sender'] == participant] for block in my_blockchain]
     recieved_transactions = [[tx['amount'] for tx in block['transactions'] if tx['recipient'] == participant] for block in my_blockchain]
+    open_sent_transactions = [tx['amount'] for tx in open_transactions if tx['sender'] == participant]
+
+    sent_transactions.append(open_sent_transactions)
     
     for sent_amount in sent_transactions:
         if len(sent_amount) > 0:

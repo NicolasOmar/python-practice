@@ -55,8 +55,9 @@ python3 exercise.py # Or any .py file
 - Complex Data Structures (`3-data-structures` folder):
   - How to use `tuples`.
   - How to use `lists` and `comprehension lists`.
-  - Use built-in converter methods like `enumerate`.
+    - How to make copies from another list and understanding the differece between `copy by reference` and `by value`.
   - How to use `set`.
+  - Use built-in converter methods like `enumerate`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
