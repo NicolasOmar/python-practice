@@ -53,8 +53,10 @@ python3 exercise.py # Or any .py file
   - Undesrtanding the usage of `None` value.
   - Undesrtanding the `not` keyword.
 - Complex Data Structures (`3-data-structures` folder):
-  - How to handle `tuples`.
+  - How to use `tuples`.
   - How to use `lists` and `comprehension lists`.
+  - Use built-in converter methods like `enumerate`.
+  - How to use `set`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
