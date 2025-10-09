@@ -52,6 +52,8 @@ python3 exercise.py # Or any .py file
   - Understanding how to use `break` and `continue` words.
   - Undesrtanding the usage of `None` value.
   - Undesrtanding the `not` keyword.
+- Complex Data Structures (`3-data-structures` folder):
+  - How to handle `tuples`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
