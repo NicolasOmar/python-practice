@@ -13,6 +13,15 @@
         # That is because is copying the reference of the list, not the actual values
         # To avoid that, you can use the LIST_NAME[:] function to create a new list with the same values
             # copy_list = original_list[:]
+        # A way to copy a specific range of a list is by using the LIST_NAME[START:END] function
+            # This will copy the values from index 1 to 2 (3 is not included)
+            # copy_list = original_list[1:3]
+        # This feature also works with tuples
+            # copy_tuple = original_tuple[1:3]
+        # To copy the list exept the last element, you can use LIST_NAME[:-1]
+            # copy_list = original_list[:-1]
+        # In all range copy examples, it gives a new copy of the list, not a reference to the original one
+        # BUT, it creates a shallow copy. The elements (such as dictionaries or lists) inside the list are still references to the original ones
 
 MINING_REWARD = 10
 genesis_block = {
@@ -160,7 +169,15 @@ def verify_chain():
         if block['previous_hash'] != hash_block(my_blockchain[index - 1]):
             return False
     return True
-    
+
+def verify_transactions():
+    """ The function verifies all open transactions to ensure they are valid. """
+    # All method checks that all items in an iterable are true
+    # In this case, we are converting the open_transactions list into a comprehension list that will return True or False depending on the verify_transaction function
+        # There is another method that checks if at least one item is true, is called any()
+        # To read more about all() and any() methods, check the following link: https://docs.python.org/3/tutorial/datastructures.html
+    return all([tx for tx in open_transactions if not verify_transaction(tx)])
+
 while waiting_for_input:
     generate_options_menu()
     
