@@ -8,10 +8,33 @@
   # A [dictionary] is mutable, not ordered, no duplicates, and uses key-value pairs. Is similar to a JavaScript object
     # {"name": "Alice", "age": 30, "city": "New York"}
 
-my_blockchain = []
+genesis_block = {
+    'previous_hash': '',
+    'index': 0,
+    'transactions': []
+}
+my_blockchain = [genesis_block]
 open_transactions = []
 waiting_for_input = True
 owner = 'Nicolas'
+
+def mine_block():
+    last_block = my_blockchain[-1]
+    # In order to create a new hash for the new block, we will use a list comprehension
+    # List comprehension creates a new list based on an existing iterable, applying an expression to each item in the iterable, in this case, concatinating each value of the dictionary into a single string
+        # hashed_block = str([last_block[key] for key in last_block])
+    # You can use an if for this comprehension to filter items from the original iterable
+    hashed_block = str([last_block[key] for key in last_block if key != 'transactions'])
+
+    block = {
+        'previous_hash': hashed_block,
+        'index': len(my_blockchain),
+        'transactions': open_transactions
+    }
+    my_blockchain.append(block)
+    add__line()
+    print('Block added!')
+    pass
 
 def get_transaction_value():
     """ Returns the input of the user (a new transaction amount and its recipient) as a tuple """
@@ -90,18 +113,22 @@ def verify_chain():
         block_index += 1
     return is_valid_chain
 
-def add__line():
-    print('---------------------')
-    
-while waiting_for_input:
+def generate_options_menu():
     add__line()
     print('Please choose an option:')
     print('1: Add a new transaction')
-    print('2: Output all blockchain blocks')
+    print('2: Mine a new block')
+    print('3: Output all blockchain blocks')
     print('h: Manipulate blockchain')
     print('q: Quit')
     add__line()
 
+def add__line():
+    print('---------------------')
+    
+while waiting_for_input:
+    generate_options_menu()
+    
     user_choice = get_user_input()
     
     if user_choice == '1':
@@ -110,6 +137,8 @@ while waiting_for_input:
         recipient, amount = tx_input_data
         add_transaction(owner, recipient, amount)
     elif user_choice == '2':
+        mine_block()
+    elif user_choice == '3':
         return_all_blocks()
     elif user_choice == 'q':
         waiting_for_input = False
