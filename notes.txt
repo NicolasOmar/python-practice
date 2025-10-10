@@ -11,7 +11,3 @@ REPL
 - Print > print the result
 - Loop > wait for the next line to be executed
 
-Types of data I will be using during this course
-- numbers > integers and floats
-- strings
-- booleans

@@ -52,6 +52,14 @@ python3 exercise.py # Or any .py file
   - Understanding how to use `break` and `continue` words.
   - Undesrtanding the usage of `None` value.
   - Undesrtanding the `not` keyword.
+- Complex Data Structures (`3-data-structures` folder):
+  - How to use `tuples`.
+  - How to use `lists`
+    - How to create modified lists with `comprehension lists`.
+    - How to make copies from another list and understanding the differece between `copy by reference` and `by value`.
+    - How to check value validity (if is true) with methods such as `all` or `any`.
+  - How to use `set`.
+  - Use built-in converter methods like `enumerate`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
