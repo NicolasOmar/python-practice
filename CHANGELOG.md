@@ -1,3 +1,24 @@
+# [3.0.0](https://github.com/NicolasOmar/python-practice/compare/v2.0.0...v3.0.0) (2025-10-10)
+
+
+### Bug Fixes
+
+* How to check value validity (if is true) with methods such as all or any ([b1c2622](https://github.com/NicolasOmar/python-practice/commit/b1c262238d79781566d5c75f4b21530296a96af4))
+* How to handle tuples ([a062070](https://github.com/NicolasOmar/python-practice/commit/a0620705f602d175be6cd5bd907b0e4ace98d688))
+* How to make copies from another list and understanding the differece between copy by reference and by value ([7c1ed9c](https://github.com/NicolasOmar/python-practice/commit/7c1ed9cb96e3ff22abffa900483c542d782b5b83))
+* How to use lists and comprehension lists ([5826921](https://github.com/NicolasOmar/python-practice/commit/582692171583921d839cb2a5099318033bac4881))
+* How to use set ([a64d0d4](https://github.com/NicolasOmar/python-practice/commit/a64d0d4405270cf7997c153acb010f42ecaa71f5))
+
+
+### Features
+
+* Exercise [#3](https://github.com/NicolasOmar/python-practice/issues/3). Complex Data Structures ([9325c82](https://github.com/NicolasOmar/python-practice/commit/9325c82ddde5fd08b50abac435044c00ab6bd18e))
+
+
+### BREAKING CHANGES
+
+* New exercise added
+
 # [2.0.0](https://github.com/NicolasOmar/python-practice/compare/v1.0.0...v2.0.0) (2025-10-07)
 
 
