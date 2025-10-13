@@ -62,6 +62,9 @@ python3 exercise.py # Or any .py file
   - Use built-in converter methods like `enumerate`.
 - Functions and Strings (`4-functions-and-strings` folder)
   - How to use `format` method for strings.
+  - How to use string interpolation with the `f` method.
+  - How to map lists with map method and `lambda functions`.
+  - How to summarize data with `reduce` method.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |

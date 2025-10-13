@@ -1,27 +1,5 @@
-# Types of iterables
-  # A [list] is mutable, ordered collection of items that allows duplicates and uses mostly one type of data
-    # [1, 2, 3, 4, 5]
-  # A [set] is also mutable, not ordered, no duplicates, and also uses mostly one type of data
-    # {1, 2, 3, 4, 5}
-  # A [tuple] is immutable, ordered collection of items that allows duplicates and can use multiple types of data
-    # (1, 2, 3, "honey", true)
-  # A [dictionary] is mutable, not ordered, no duplicates, and uses key-value pairs. Is similar to a JavaScript object
-    # {"name": "Alice", "age": 30, "city": "New York"}
-
-# Other thigs to have in mind when you are using iterables
-    # If you copy a list from another one and change any of its values inside, it will change the value in both lists because they are pointing to the same memory address
-        # That is because is copying the reference of the list, not the actual values
-        # To avoid that, you can use the LIST_NAME[:] function to create a new list with the same values
-            # copy_list = original_list[:]
-        # A way to copy a specific range of a list is by using the LIST_NAME[START:END] function
-            # This will copy the values from index 1 to 2 (3 is not included)
-            # copy_list = original_list[1:3]
-        # This feature also works with tuples
-            # copy_tuple = original_tuple[1:3]
-        # To copy the list exept the last element, you can use LIST_NAME[:-1]
-            # copy_list = original_list[:-1]
-        # In all range copy examples, it gives a new copy of the list, not a reference to the original one
-        # BUT, it creates a shallow copy. The elements (such as dictionaries or lists) inside the list are still references to the original ones
+# A built in module that provides functions from python standard library
+import functools
 
 MINING_REWARD = 10
 genesis_block = {
@@ -33,7 +11,6 @@ my_blockchain = [genesis_block]
 open_transactions = []
 waiting_for_input = True
 owner = 'Nicolas'
-# A set can be created without any previous values or with a iterable like a list
 participants = set([owner])
 
 def add__line():
@@ -57,11 +34,6 @@ def get_user_input():
 
 def hash_block(block):
     """ Hash a block using its strucutre as base """
-    # In order to create a new hash for the new block, we will use a list comprehension
-    # List comprehension creates a new list based on an existing iterable, applying an expression to each item in the iterable, in this case, concatinating each value of the dictionary into a single string
-        # hashed_block = str([last_block[key] for key in last_block])
-    # You can use an if for this comprehension to filter items from the original iterable
-        # hashed_block = str([last_block[key] for key in last_block if key != 'transactions'])
     return str(block[key] for key in block)
 
 def mine_block():
@@ -81,8 +53,6 @@ def mine_block():
     }
     
     my_blockchain.append(block)
-    # Here if you try to reset the open_transactions list, it will create a new local variable instead of modifying the global one
-        # open_transactions = []
     print('Block added!')
     add__line()
     return True
@@ -127,7 +97,6 @@ def add_transaction(sender, recipient, amount=1):
 
     if verify_transaction(new_transaction):
         open_transactions.append(new_transaction)
-        # When you add a new element to a set, if the element already exists, it will not be added again
         participants.add(sender)
         participants.add(recipient)
     else:
@@ -138,31 +107,32 @@ def return_all_blocks():
     print('---Outputting all blocks---')
     
     for block in my_blockchain:
-        print('Outputting block: ' + str(block))
+        print(f'Outputting block: {block}')
     add__line()
     
 def get_balance(participant):
-    final_balance = 0
+    # final_balance = 0
     sent_transactions = [[tx['amount'] for tx in block['transactions'] if tx['sender'] == participant] for block in my_blockchain]
     recieved_transactions = [[tx['amount'] for tx in block['transactions'] if tx['recipient'] == participant] for block in my_blockchain]
     open_sent_transactions = [tx['amount'] for tx in open_transactions if tx['sender'] == participant]
 
     sent_transactions.append(open_sent_transactions)
-    
-    for sent_amount in sent_transactions:
-        if len(sent_amount) > 0:
-            final_balance -= sent_amount
+    # This function is a reducer that will sum up all the values in a list of lists
+    # The lambda function is an anonymous function that takes two arguments, the first one is the accumulator (the sum of the previous values) and the second one is the current value
+    sent_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0, sent_transactions, 0)
+    # for sent_amount in sent_transactions:
+    #     if len(sent_amount) > 0:
+    #         final_balance -= sent_amount
 
-    for recieved_amount in recieved_transactions:
-        if len(recieved_amount) > 0:
-            final_balance += recieved_amount
-    
-    return final_balance
+    recieved_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0, recieved_transactions, 0)
+    # for recieved_amount in recieved_transactions:
+    #     if len(recieved_amount) > 0:
+    #         final_balance += recieved_amount
+
+    return recieved_amounts - sent_amounts
 
 def verify_chain():
     """ The function helps to verify the integrity of the blockchain by checking if each block's previous hash matches the hash of the previous block. """
-    # Enumerate is a function that will convert your list in a tuple with the index and the value of each item in the list
-    # By creating a tuple, we you can unpack its values into different variables
     for (index, block) in enumerate(my_blockchain):
         if index == 0:
             continue
@@ -172,10 +142,6 @@ def verify_chain():
 
 def verify_transactions():
     """ The function verifies all open transactions to ensure they are valid. """
-    # All method checks that all items in an iterable are true
-    # In this case, we are converting the open_transactions list into a comprehension list that will return True or False depending on the verify_transaction function
-        # There is another method that checks if at least one item is true, is called any()
-        # To read more about all() and any() methods, check the following link: https://docs.python.org/3/tutorial/datastructures.html
     return all([tx for tx in open_transactions if not verify_transaction(tx)])
 
 while waiting_for_input:
@@ -185,12 +151,10 @@ while waiting_for_input:
     
     if user_choice == '1':
         tx_input_data = get_transaction_value()
-        # A way to unpack values from a tuple into different variables
         recipient, amount = tx_input_data
         add_transaction(owner, recipient, amount)
     elif user_choice == '2':
         if mine_block():
-            # Here you can reset the open_transactions list after mining a block because is referring to the global variable
             open_transactions = []
     elif user_choice == '3':
         return_all_blocks()
@@ -206,7 +170,7 @@ while waiting_for_input:
     if not verify_chain():
         print('Invalid blockchain!')
         waiting_for_input = False
-    print('Balance: ' + str(get_balance(owner)))
+    print(f"Balance of {owner}: {get_balance(owner)}")
 else:
     print('User left!')
 
