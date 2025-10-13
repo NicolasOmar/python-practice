@@ -60,6 +60,8 @@ python3 exercise.py # Or any .py file
     - How to check value validity (if is true) with methods such as `all` or `any`.
   - How to use `set`.
   - Use built-in converter methods like `enumerate`.
+- Functions and Strings (`4-functions-and-strings` folder)
+  - How to use `format` method for strings.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
