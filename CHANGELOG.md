@@ -1,3 +1,21 @@
+# [4.0.0](https://github.com/NicolasOmar/python-practice/compare/v3.0.0...v4.0.0) (2025-10-13)
+
+
+### Bug Fixes
+
+* How to use format method for strings ([4f48bcf](https://github.com/NicolasOmar/python-practice/commit/4f48bcf4fea4ecf1388a6faf571972be7be512fb))
+* How to use string interpolation with the f method and how to map lists with map method and lambda functions ([b5ec735](https://github.com/NicolasOmar/python-practice/commit/b5ec73549a113e275d7701aea76b4a50c6495fcc))
+
+
+### Features
+
+* Exercise [#4](https://github.com/NicolasOmar/python-practice/issues/4). Functions and Strings ([67cec26](https://github.com/NicolasOmar/python-practice/commit/67cec262595548790a5a710879c05a1f8adb6b58))
+
+
+### BREAKING CHANGES
+
+* Exercise complete
+
 # [3.0.0](https://github.com/NicolasOmar/python-practice/compare/v2.0.0...v3.0.0) (2025-10-10)
 
 
