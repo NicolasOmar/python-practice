@@ -119,12 +119,12 @@ def get_balance(participant):
     sent_transactions.append(open_sent_transactions)
     # This function is a reducer that will sum up all the values in a list of lists
     # The lambda function is an anonymous function that takes two arguments, the first one is the accumulator (the sum of the previous values) and the second one is the current value
-    sent_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0, sent_transactions, 0)
+    sent_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt) if len(tx_amt) > 0 else tx_amt + 0, sent_transactions, 0)
     # for sent_amount in sent_transactions:
     #     if len(sent_amount) > 0:
     #         final_balance -= sent_amount
 
-    recieved_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0, recieved_transactions, 0)
+    recieved_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt) if len(tx_amt) > 0 else tx_amt + 0, recieved_transactions, 0)
     # for recieved_amount in recieved_transactions:
     #     if len(recieved_amount) > 0:
     #         final_balance += recieved_amount
