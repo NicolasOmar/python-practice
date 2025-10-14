@@ -1,15 +1,15 @@
 # A built in module that provides functions from python standard library
 import functools
-# Hashing functions are provided by the hashlib module
-import hashlib
-# The json module allows us to convert python objects into json strings (including structures such as lists and dictionaries)
-import json
+import collections
+
+from utils import hash_block, hash_string_256
 
 MINING_REWARD = 10
 genesis_block = {
     'previous_hash': '',
     'index': 0,
-    'transactions': []
+    'transactions': [],
+    'proof': 100
 }
 my_blockchain = [genesis_block]
 open_transactions = []
@@ -38,7 +38,7 @@ def get_user_input():
 
 def valid_proof(transactions, last_hash, proof):
     guess = (str(transactions) + str(last_hash) + str(proof)).encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
+    guess_hash = hash_string_256(guess)
     # If the hash starts with 2 leading zeros, we consider it a valid proof
     return guess_hash[0:2] == '00'
 
@@ -46,34 +46,30 @@ def proof_of_work():
     last_block = my_blockchain[-1]
     hash_last_block = hash_block(last_block)
     proof = 0
-    while valid_proof(open_transactions, hash_last_block, proof):
+    while not valid_proof(open_transactions, hash_last_block, proof):
         proof += 1
     return proof
 
-def hash_block(block):
-    
-    """ Hash a block using its strucutre as base """
-    # On this case, first we are going to convert the block into a json string
-    # Then we are going to encode it to bytes with the enconde function
-    encoded_block = json.dumps(block, sort_keys=True).encode()
-    # And at last, we are going to return the hashed block using sha256
-    # but converted into a hexadecimal string (for easier reading)
-    return hashlib.sha256(encoded_block).hexdigest()
+
 
 def mine_block():
     last_block = my_blockchain[-1]
     hashed_block = hash_block(last_block)
+    proof_of_work_value = proof_of_work()
 
-    reward_transaction = {
-        'sender': 'MINING',
-        'recipient': owner,
-        'amount': MINING_REWARD
-    }
+    # Old way to create a mining reward transaction, it will be replaced by an OrderedDict to keep the order of the elements
+        # reward_transaction = {
+        #     'sender': 'MINING',
+        #     'recipient': owner,
+        #     'amount': MINING_REWARD
+        # }
+    reward_transaction = collections.OrderedDict([('sender', 'MINING'), ('recipient', owner), ('amount', MINING_REWARD)])
 
     block = {
         'previous_hash': hashed_block,
         'index': len(my_blockchain),
-        'transactions': [open_transactions, reward_transaction]
+        'transactions': [open_transactions, reward_transaction],
+        'proof': proof_of_work_value
     }
     
     my_blockchain.append(block)
@@ -112,11 +108,13 @@ def add_transaction(sender, recipient, amount=1):
             :amount: The amount of the transaction.
     """
 
-    new_transaction = {
-        'sender': sender,
-        'recipient': recipient,
-        'amount': amount
-    }
+    # An old way to create a transaction, it will be replaced by an OrderedDict to keep the order of the elements
+        # new_transaction = {
+        #     'sender': sender,
+        #     'recipient': recipient,
+        #     'amount': amount
+        # }
+    new_transaction = collections.OrderedDict([('sender', sender), ('recipient', recipient), ('amount', amount)])
 
     if verify_transaction(new_transaction):
         open_transactions.append(new_transaction)
@@ -151,6 +149,10 @@ def verify_chain():
         if index == 0:
             continue
         if block['previous_hash'] != hash_block(my_blockchain[index - 1]):
+            return False
+        # You are cheking all the transactions except the last one because the last one is the mining reward transaction
+        if not valid_proof(block['transactions'][:-1], block['previous_hash'], block['proof']):
+            print('Proof of work is invalid')
             return False
     return True
 

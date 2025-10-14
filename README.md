@@ -73,6 +73,7 @@ python3 exercise.py # Or any .py file
   - How to summarize data with `reduce` method.
 - Standard Library (`5-standard-library` folder)
   - Understanding the ways to import built-in functions from [Python Standard Library](https://docs.python.org/3/library/index.html).
+  - Learn how to split functions in other files and import them.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
