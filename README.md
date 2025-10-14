@@ -72,7 +72,7 @@ python3 exercise.py # Or any .py file
   - How to map lists with map method and `lambda functions`.
   - How to summarize data with `reduce` method.
 - Standard Library (`5-standard-library` folder)
-  - 
+  - Understanding the ways to import built-in functions from [Python Standard Library](https://docs.python.org/3/library/index.html).
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |

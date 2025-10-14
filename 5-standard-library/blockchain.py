@@ -1,5 +1,9 @@
 # A built in module that provides functions from python standard library
 import functools
+# Hashing functions are provided by the hashlib module
+import hashlib
+# The json module allows us to convert python objects into json strings (including structures such as lists and dictionaries)
+import json
 
 MINING_REWARD = 10
 genesis_block = {
@@ -32,9 +36,29 @@ def get_user_input():
     add__line()
     return user_input
 
+def valid_proof(transactions, last_hash, proof):
+    guess = (str(transactions) + str(last_hash) + str(proof)).encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    # If the hash starts with 2 leading zeros, we consider it a valid proof
+    return guess_hash[0:2] == '00'
+
+def proof_of_work():
+    last_block = my_blockchain[-1]
+    hash_last_block = hash_block(last_block)
+    proof = 0
+    while valid_proof(open_transactions, hash_last_block, proof):
+        proof += 1
+    return proof
+
 def hash_block(block):
+    
     """ Hash a block using its strucutre as base """
-    return str(block[key] for key in block)
+    # On this case, first we are going to convert the block into a json string
+    # Then we are going to encode it to bytes with the enconde function
+    encoded_block = json.dumps(block, sort_keys=True).encode()
+    # And at last, we are going to return the hashed block using sha256
+    # but converted into a hexadecimal string (for easier reading)
+    return hashlib.sha256(encoded_block).hexdigest()
 
 def mine_block():
     last_block = my_blockchain[-1]
