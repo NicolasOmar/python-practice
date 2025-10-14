@@ -1,3 +1,21 @@
+# [5.0.0](https://github.com/NicolasOmar/python-practice/compare/v4.0.0...v5.0.0) (2025-10-14)
+
+
+### Bug Fixes
+
+* Learn how to split functions in other files and import them ([9691787](https://github.com/NicolasOmar/python-practice/commit/96917871d54ef815b46633a3e7d1f0748612f7ef))
+* Understanding the ways to import built-in functions from Python Standard Library ([f17690c](https://github.com/NicolasOmar/python-practice/commit/f17690c06a894dd3e4b0a1f7e49c65bc6c8912cb))
+
+
+### Features
+
+* Exercise [#5](https://github.com/NicolasOmar/python-practice/issues/5). Python Standard Library ([d65621d](https://github.com/NicolasOmar/python-practice/commit/d65621d39df5ade8eaa328adab5804354e66458d))
+
+
+### BREAKING CHANGES
+
+* Exercise added
+
 # [4.0.0](https://github.com/NicolasOmar/python-practice/compare/v3.0.0...v4.0.0) (2025-10-13)
 
 
