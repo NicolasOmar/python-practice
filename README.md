@@ -30,8 +30,14 @@ cd python-practice
 ```
 
 ## How to run it
+Each folder might have the following files:
+- `theory.py` for concepts explanation.
+- `blockchain.py` for improvements in course's main exercise.
+- `exercise.py` related to subject's learned lessons.
+
 To run any specific exercise, execute the following command in the project´s folder:
 ```python
+cd folder_name
 python3 exercise.py # Or any .py file
 ```
 
@@ -65,6 +71,9 @@ python3 exercise.py # Or any .py file
   - How to use string interpolation with the `f` method.
   - How to map lists with map method and `lambda functions`.
   - How to summarize data with `reduce` method.
+- Standard Library (`5-standard-library` folder)
+  - Understanding the ways to import built-in functions from [Python Standard Library](https://docs.python.org/3/library/index.html).
+  - Learn how to split functions in other files and import them.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
