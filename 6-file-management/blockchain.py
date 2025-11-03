@@ -1,6 +1,7 @@
 # A built in module that provides functions from python standard library
 import functools
 import collections
+import json
 
 from utils import hash_block, hash_string_256
 
@@ -120,6 +121,7 @@ def add_transaction(sender, recipient, amount=1):
         open_transactions.append(new_transaction)
         participants.add(sender)
         participants.add(recipient)
+        save_data()
     else:
         print('Transaction failed! Not enough balance!')
     add__line()
@@ -160,6 +162,44 @@ def verify_transactions():
     """ The function verifies all open transactions to ensure they are valid. """
     return all([tx for tx in open_transactions if not verify_transaction(tx)])
 
+def load_data():
+    with open('blockchain.txt', mode='r') as f:
+        file_content = f.readlines()
+        # This adds a reference of the mentioned varables to be handled
+        global my_blockchain
+        global open_transactions
+        # Have in mind that the data you are returning is in string format, does not care if is a list or dictionary
+            # my_blockchain = file_content[0]
+        # To convert the string data into a list or dictionary you can use the json module
+        my_blockchain = json.loads(file_content[0])
+        updated_blockchain = []
+        updated_transactions = []
+        
+        for block in my_blockchain:
+            updated_block = {
+                'previous_hash': block['previous_hash'],
+                'proof': block['proof'],
+                'index': block['index'],
+                'transactions': [collections.OrderedDict(
+                    [('sender', tx['sender']), ('recipient', tx['recipient']), ('amount', tx['amount'])]) for tx in block['transactions']],
+            }
+            updated_blockchain.append(updated_block)
+
+        for tx in block['transactions']:
+            updated_transaction = collections.OrderedDict(
+                [('sender', tx['sender']), ('recipient', tx['recipient']), ('amount', tx['amount'])])
+            updated_transactions.append(updated_transaction)
+            
+        my_blockchain = updated_blockchain
+        open_transactions = updated_transactions
+
+def save_data():
+    with open('blockchain.txt', mode='w') as f:
+        # To save the data in another format rather than string, you can use the json module to convert it
+        f.write(json.dumps(my_blockchain))
+        f.write('\n')
+        f.write(json.dumps(open_transactions))
+
 while waiting_for_input:
     generate_options_menu()
     
@@ -172,6 +212,7 @@ while waiting_for_input:
     elif user_choice == '2':
         if mine_block():
             open_transactions = []
+            save_data()
     elif user_choice == '3':
         return_all_blocks()
     elif user_choice == '4':

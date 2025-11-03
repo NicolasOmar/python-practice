@@ -208,5 +208,6 @@ __marimo__/
 
 # dependencies
 **/node_modules
-
 .DS_Store
+
+*.txt
