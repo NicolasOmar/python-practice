@@ -76,6 +76,8 @@ python3 exercise.py # Or any .py file
   - Learn how to split functions in other files and import them.
 - File management (`6-file-management` folder)
   - Learn how to `open`, `close`, `write` and `read` a file.
+  - Learn how to handle multiline texts (by writing and reading them).
+  - Learn how to handle better the open/close file logic using `with` statement.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
