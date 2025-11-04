@@ -80,6 +80,7 @@ python3 exercise.py # Or any .py file
   - Learn how to handle better the open/close file logic using `with` statement.
 - Object oriented programming (`7-object-oriented` folder)
   - Learn how to create a `class` with its `properties` and its `methods` and call them from an `instance`.
+  - How to assign object values in creation with `class constructor`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
