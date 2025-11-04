@@ -1,3 +1,21 @@
+# [6.0.0](https://github.com/NicolasOmar/python-practice/compare/v5.0.0...v6.0.0) (2025-11-04)
+
+
+### Bug Fixes
+
+* Learn how to handle multiline texts (by writing and reading them) and the open/close file logic using with statement ([c848d19](https://github.com/NicolasOmar/python-practice/commit/c848d196dd95080a1e219d0f6fdc26c155f524df))
+* Learn how to open, close, write and read a file ([75d1eb5](https://github.com/NicolasOmar/python-practice/commit/75d1eb5f7d524038fe96ba9825a0022004c09e67))
+
+
+### Features
+
+* Exercise [#6](https://github.com/NicolasOmar/python-practice/issues/6). File Management ([3dc77d2](https://github.com/NicolasOmar/python-practice/commit/3dc77d233e84d9d7fbc460f2a1da5bd2b14f014b))
+
+
+### BREAKING CHANGES
+
+* Exercise completed.
+
 # [5.0.0](https://github.com/NicolasOmar/python-practice/compare/v4.0.0...v5.0.0) (2025-10-14)
 
 
