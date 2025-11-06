@@ -1,6 +1,8 @@
 from time import time
+from printable import Printable
 
-class Block:
+# Inject Printable class to include a repetable function to reuse that logic across other classes
+class Block(Printable):
   def __init__(self, index, previous_hash, transactions, proof, timestamp=None):
     self.index = index
     self.previous_hash = previous_hash
