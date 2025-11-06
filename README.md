@@ -81,6 +81,8 @@ python3 exercise.py # Or any .py file
 - Object oriented programming (`7-object-oriented` folder)
   - Learn how to create a `class` with its `properties` and its `methods` and call them from an `instance`.
   - How to assign object values in creation with `class constructor`.
+  - Basic understanding of built-in class methods such as `__dict__`.
+  - How to handle `private properties` and `encapsulation`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
