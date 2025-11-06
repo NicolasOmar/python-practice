@@ -1,5 +1,9 @@
 from time import time
-from printable import Printable
+# CLASS IMPORTS
+# Have in mind that in order to correctly import a class located in a folder
+# You have to call first the folder (or folders in order) and lastly, the file
+# In this case, I make the import of the Class at the end to avoid verbosity
+from classes.printable import Printable
 
 # Inject Printable class to include a repetable function to reuse that logic across other classes
 class Block(Printable):

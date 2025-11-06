@@ -30,10 +30,13 @@ cd python-practice
 ```
 
 ## How to run it
-Each folder might have the following files:
+Each folder might have the following files[^1]:
 - `theory.py` for concepts explanation.
 - `blockchain.py` for improvements in course's main exercise.
 - `exercise.py` related to subject's learned lessons.
+
+> [!NOTE]
+> There are some cases where the files are extended as folders due its structure has been increased
 
 To run any specific exercise, execute the following command in the project´s folder:
 ```python

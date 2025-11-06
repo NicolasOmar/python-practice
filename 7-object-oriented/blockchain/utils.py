@@ -14,3 +14,6 @@ def hash_block(block):
     encoded_block = json.dumps(hashable_block, sort_keys=True).encode()
     
     return hash_string_256(encoded_block)
+
+def add__line():
+    print('------------------------------')
