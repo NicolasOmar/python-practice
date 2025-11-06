@@ -7,6 +7,9 @@ def hash_string_256(string):
 
 def hash_block(block):
     """ Hash a block using its strucutre as base """
-    encoded_block = json.dumps(block, sort_keys=True).encode()
+    # print(block)
+    # print(block.__dict__.copy())
+    hashable_block = block.__dict__.copy()
+    encoded_block = json.dumps(hashable_block, sort_keys=True).encode()
     
     return hash_string_256(encoded_block)
