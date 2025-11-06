@@ -83,6 +83,7 @@ python3 exercise.py # Or any .py file
   - How to assign object values in creation with `class constructor`.
   - Basic understanding of built-in class methods such as `__dict__`.
   - How to handle `private properties` and `encapsulation`.
+  - How to work with `class inheritance`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
