@@ -30,10 +30,13 @@ cd python-practice
 ```
 
 ## How to run it
-Each folder might have the following files:
+Each folder might have the following files[^1]:
 - `theory.py` for concepts explanation.
 - `blockchain.py` for improvements in course's main exercise.
 - `exercise.py` related to subject's learned lessons.
+
+> [!NOTE]
+> There are some cases where the files are extended as folders due its structure has been increased
 
 To run any specific exercise, execute the following command in the project´s folder:
 ```python
@@ -78,6 +81,14 @@ python3 exercise.py # Or any .py file
   - Learn how to `open`, `close`, `write` and `read` a file.
   - Learn how to handle multiline texts (by writing and reading them).
   - Learn how to handle better the open/close file logic using `with` statement.
+- Object oriented programming (`7-object-oriented` folder)
+  - Learn how to create a `class` with its `properties` and its `methods` and call them from an `instance`.
+  - How to assign object values in creation with `class constructor`.
+  - Basic understanding of built-in class methods such as `__dict__`.
+  - How to handle `private properties` and `encapsulation`.
+  - How to work with `class inheritance`.
+  - How to implement and execute classes with `class` and `static methods`.
+  - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
