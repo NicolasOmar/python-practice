@@ -87,6 +87,7 @@ python3 exercise.py # Or any .py file
   - Basic understanding of built-in class methods such as `__dict__`.
   - How to handle `private properties` and `encapsulation`.
   - How to work with `class inheritance`.
+  - How to implement and execute classes with `class` and `static methods`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |

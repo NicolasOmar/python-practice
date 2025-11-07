@@ -48,7 +48,6 @@ class Node:
     waiting_for_input = True
 
     while waiting_for_input:
-        verifier = Verification()
         self.generate_options_menu()
         
         user_choice = self.get_user_input()
@@ -62,7 +61,8 @@ class Node:
         elif user_choice == '3':
             self.return_all_blocks()
         elif user_choice == '4':
-          if verifier.verify_transactions(self.blockchain.open_transactions):
+          # Using class and static methods, those can be called without need to instanciate it
+          if Verification.verify_transactions(self.blockchain.open_transactions):
             print('Trasnsaction VALID')
           else:
             print('Trasnsaction INVALID')
@@ -70,7 +70,8 @@ class Node:
             waiting_for_input = False
         else:
             print('Invalid input, please choose a valid option')
-        if not verifier.verify_chain(self.blockchain.chain):
+            # Using class and static methods, those can be called without need to instanciate it
+        if not Verification.verify_chain(self.blockchain.chain):
             print('Invalid blockchain!')
             waiting_for_input = False
         print(f"Balance of {self.id}: {self.blockchain.get_balance(self.id)}")

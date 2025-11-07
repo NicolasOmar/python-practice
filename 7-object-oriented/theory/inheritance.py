@@ -1,4 +1,9 @@
-# This class has been created to share properties and methods usable in other classes without duplication, that is called [inheritance]
+# A small disclaimer: It is highly recommended to split all class declarations in several files and folders.
+# But due this is just a theory file (next to 'class.py'), we can make an exception.
+
+# -----VEHICLE CLASS-----
+
+# # This class has been created to share properties and methods usable in other classes without duplication, that is called [inheritance]
 class Vehicle:
   def __init__(self, starting_top_speed=100):
     self.top_speed = starting_top_speed
@@ -14,6 +19,8 @@ class Vehicle:
     if len(self.__warnings) == 0:
       self.__warnings.append(warning_text)
       print(f'New warning: {warning_text}')
+
+# -----CAR CLASS-----
 
 # Now, to inherance all [Vehicle] properties and methods, you add its references as a method argument right after [Car] class
 class Car(Vehicle):
@@ -37,6 +44,7 @@ private_car = Car()
 private_car.add_warning('Engine not functioning')
 print(private_car.get_warnings())
 
+# -----BUS CLASS-----
 
 class Bus(Vehicle):
   def __init__(self, starting_speed=100):

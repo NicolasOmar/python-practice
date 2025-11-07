@@ -15,7 +15,6 @@ MINING_REWARD = 10
 class Blockchain:
     def __init__(self, node_hosting_id):
         genesis_block = Block(0, '', [], 100)
-        self.verifier = Verification()
         self.chain = [genesis_block]
         self.open_transactions = []
         self.hosting_id = node_hosting_id
@@ -90,7 +89,8 @@ class Blockchain:
         """
         new_transaction = Transaction(sender, recipient, amount)
 
-        if self.verifier.verify_transaction(new_transaction, self.get_balance):
+        # Using class and static methods, those can be called without need to instanciate it
+        if Verification.verify_transaction(new_transaction, self.get_balance):
             self.open_transactions.append(new_transaction)
             self.save_data()
         else:
@@ -123,6 +123,7 @@ class Blockchain:
         last_block = self.chain[-1]
         hash_last_block = hash_block(last_block)
         proof = 0
-        while not self.verifier.valid_proof(self.open_transactions, hash_last_block, proof):
+        # Using class and static methods, those can be called without need to instanciate it
+        while not Verification.valid_proof(self.open_transactions, hash_last_block, proof):
             proof += 1
         return proof
