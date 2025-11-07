@@ -88,6 +88,7 @@ python3 exercise.py # Or any .py file
   - How to handle `private properties` and `encapsulation`.
   - How to work with `class inheritance`.
   - How to implement and execute classes with `class` and `static methods`.
+  - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |

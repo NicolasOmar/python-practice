@@ -62,7 +62,7 @@ class Node:
             self.return_all_blocks()
         elif user_choice == '4':
           # Using class and static methods, those can be called without need to instanciate it
-          if Verification.verify_transactions(self.blockchain.open_transactions):
+          if Verification.verify_transactions(self.blockchain.get_open_transactions()):
             print('Trasnsaction VALID')
           else:
             print('Trasnsaction INVALID')
