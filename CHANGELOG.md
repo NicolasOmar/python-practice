@@ -1,3 +1,26 @@
+# [7.0.0](https://github.com/NicolasOmar/python-practice/compare/v6.0.0...v7.0.0) (2025-11-07)
+
+
+### Bug Fixes
+
+* Basic understanding of built-in class methods such as __dict__. How to handle private properties and encapsulation ([a921560](https://github.com/NicolasOmar/python-practice/commit/a921560eea42fbf8afba101b75404833918f5a9a))
+* How to assign object values in creation with class constructor ([016e1e9](https://github.com/NicolasOmar/python-practice/commit/016e1e9764720649c58633a69480ea87143dcc8e))
+* How to implement a better encapsulation using properties for getter and setter methods ([09c21e6](https://github.com/NicolasOmar/python-practice/commit/09c21e6bf730ea92a0682b87f303c033b43b4647))
+* How to implement and execute classes with class and static methods ([ef2c0fa](https://github.com/NicolasOmar/python-practice/commit/ef2c0fa2f9022ec694326a47bbc172ac8e399e33))
+* How to work with class inheritance ([6d2ccae](https://github.com/NicolasOmar/python-practice/commit/6d2ccae707dd2425f405f6a39c2bb1550a7feb08))
+* Learn how to create a class with its properties and its methods and call them from an instance ([4cd1e4b](https://github.com/NicolasOmar/python-practice/commit/4cd1e4b0aa395b1d91f940a1735a3bed3c18947a))
+* Refactoring blockchain exercise to object oriented programming ([414be2b](https://github.com/NicolasOmar/python-practice/commit/414be2b08d59e587042b18f1ce5f1902d8ad1186))
+
+
+### Features
+
+* Exercise [#7](https://github.com/NicolasOmar/python-practice/issues/7). Object Oriented Programming ([46d251c](https://github.com/NicolasOmar/python-practice/commit/46d251ce38d4717f29a4a936dafd4913849894cd))
+
+
+### BREAKING CHANGES
+
+* Exercise added
+
 # [6.0.0](https://github.com/NicolasOmar/python-practice/compare/v5.0.0...v6.0.0) (2025-11-04)
 
 
