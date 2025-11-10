@@ -27,15 +27,20 @@ After cloning the repo, go to the created folder and install the check its conte
 ```sh
 git clone https://github.com/NicolasOmar/python-practice.git
 cd python-practice
+cd 7-object-oriented
+pip install pycryptodome
+cd ../8-modules-and-http
+pip install pycryptodome
 ```
 
+> Some exercises need install of third-party packages such as [pycryptodome](https://pypi.org/project/pycryptodome/)
+
 ## How to run it
-Each folder might have the following files[^1]:
+Each folder might have the following files:
 - `theory.py` for concepts explanation.
 - `blockchain.py` for improvements in course's main exercise.
 - `exercise.py` related to subject's learned lessons.
 
-> [!NOTE]
 > There are some cases where the files are extended as folders due its structure has been increased
 
 To run any specific exercise, execute the following command in the project´s folder:
@@ -89,6 +94,8 @@ python3 exercise.py # Or any .py file
   - How to work with `class inheritance`.
   - How to implement and execute classes with `class` and `static methods`.
   - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
+- Modules and HTTP (folder `8-modules-and-http`):
+  - How to install packages from [pip](https://pypi.org/) network such as [pycryptodome](https://pypi.org/project/pycryptodome/)
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
