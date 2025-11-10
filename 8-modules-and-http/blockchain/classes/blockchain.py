@@ -44,7 +44,7 @@ class Blockchain:
                 updated_transactions = []
                 
                 for current_block in blockchain:
-                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['amount']) for tx in current_block.transactions]
+                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in current_block.transactions]
                     updated_block = Block(
                         current_block.proof,
                         current_block.previous_hash,
@@ -53,7 +53,7 @@ class Blockchain:
                     updated_blockchain.append(updated_block)
 
                 for tx in current_block.transactions:
-                    updated_transaction = Transaction(tx['sender'], tx['recipient'], tx['amount'])
+                    updated_transaction = Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount'])
                     updated_transactions.append(updated_transaction)
                     
                 self.chain = updated_blockchain
@@ -73,16 +73,21 @@ class Blockchain:
             f.write('\n')
             f.write(json.dumps(savable_transactions))
 
-    def get_balance(self, participant):
-        sent_transactions = [[tx.amount for tx in block.transactions if tx.sender == participant] for block in self.__chain]
-        recieved_transactions = [[tx.amount for tx in block.transactions if tx.recipient == participant] for block in self.__chain]
-        open_sent_transactions = [tx.amount for tx in self.__open_transactions if tx.sender == participant]
-
-        sent_transactions.append(open_sent_transactions)
-        sent_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt), sent_transactions, 0)
-        recieved_amounts = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt), recieved_transactions, 0)
-
-        return recieved_amounts - sent_amounts
+    def get_balance(self):
+        participant = self.hosting_id
+        tx_sender = [[tx.amount for tx in block.transactions
+                      if tx.sender == participant] for block in self.__chain]
+        open_tx_sender = [tx.amount
+                          for tx in self.__open_transactions if tx.sender == participant]
+        tx_sender.append(open_tx_sender)
+        print(tx_sender)
+        amount_sent = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt)
+                             if len(tx_amt) > 0 else tx_sum + 0, tx_sender, 0)
+        tx_recipient = [[tx.amount for tx in block.transactions
+                         if tx.recipient == participant] for block in self.__chain]
+        amount_received = functools.reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt)
+                                 if len(tx_amt) > 0 else tx_sum + 0, tx_recipient, 0)
+        return amount_received - amount_sent
 
     def take_last_blockchain_value(self):
         if len(self.__chain) < 1:
@@ -90,7 +95,7 @@ class Blockchain:
         
         return self.__chain[-1]
     
-    def add_transaction(self, sender, recipient, amount=1):
+    def add_transaction(self, recipient, sender, signature, amount=1.0):
         """
             Add a new transaction to the list of open transactions (which will be added to the next mined block)
 
@@ -102,14 +107,14 @@ class Blockchain:
         if self.hosting_id == None:
             return False
         
-        new_transaction = Transaction(sender, recipient, amount)
+        new_transaction = Transaction(sender, recipient, signature, amount)
 
         if Verification.verify_transaction(new_transaction, self.get_balance):
             self.__open_transactions.append(new_transaction)
             self.save_data()
+            return True
         else:
-            print('Transaction failed! Not enough balance!')
-        add__line()
+            return False
 
     def mine_block(self):
         if self.hosting_id == None:
@@ -119,7 +124,7 @@ class Blockchain:
         hashed_block = hash_block(last_block)
         proof_of_work_value = self.proof_of_work()
         
-        reward_transaction = Transaction('MINING', self.hosting_id, MINING_REWARD)
+        reward_transaction = Transaction('MINING', self.hosting_id, '', MINING_REWARD)
 
         transactions = self.__open_transactions.copy()
         transactions.append(reward_transaction)

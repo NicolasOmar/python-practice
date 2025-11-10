@@ -56,7 +56,9 @@ class Node:
         if user_choice == '1':
             tx_input_data = self.get_transaction_value()
             recipient, amount = tx_input_data
-            if not self.blockchain.add_transaction(self.wallet.public_key, recipient, amount):
+            
+            signature = self.wallet.sign_transaction(self.wallet.public_key, recipient, amount)
+            if not self.blockchain.add_transaction(self.wallet.public_key, recipient, signature, amount):
                print('Transaction failed')
         elif user_choice == '2':
             if not self.blockchain.mine_block():
@@ -83,7 +85,7 @@ class Node:
         if not Verification.verify_chain(self.blockchain.chain):
             print('Invalid blockchain!')
             waiting_for_input = False
-        print(f"Balance of {self.wallet.public_key}: {self.blockchain.get_balance(self.wallet.public_key)}")
+        print(f"Balance of {self.wallet.public_key}: {self.blockchain.get_balance()}")
     else:
         print('User left!')
 
