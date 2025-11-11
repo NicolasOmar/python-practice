@@ -4,18 +4,21 @@ from classes.wallet import Wallet
 from classes.blockchain import Blockchain
 
 # Is telling in what context is running Flask
-# If you start the proyect from this file, __name__ will be 'main'
+# If you start the proyect from this file, __name__ will be '__main__'
 # Otherwise, it will the name of the file you assigned this line
 server_app = Flask(__name__)
 server_wallet = Wallet()
 server_blockchain = Blockchain(server_wallet.public_key)
-# This will make our server open to outside calling
+# This will make our server open to outside callings
 CORS(server_app)
 
 @server_app.route('/', methods=['GET'])
 def get_ui():
   return 'Ping! This thing works!'
 
+# Each route is referenced to the created Flask ([server_app] variable)
+# Its first argument is related to the route we are opening to the public
+# The second one is a definition of the approved HTTP methods to call this route
 @server_app.route('/wallet', methods=['POST'])
 def create_keys():
   server_wallet.create_keys()
@@ -30,6 +33,9 @@ def create_keys():
       'funds': server_blockchain.get_balance()
     }
     
+    # EVERY response must be parsed into JSON
+    # Flask facilitates it with jsonify, which asks for the argument to parse
+    # Alongside with the parsed response, you can add a HTTP response as the next argument
     return jsonify(correct_response), 201
   else:
     error_response = { 'message': 'Saving the keys failed' }
@@ -158,5 +164,8 @@ def get_balance():
 
     return jsonify(error_response), 500
 
+# At the bottom of the file, you can run the API if the program is beign run
+# from this file (which will give the __name__ variable the name __main__)
+# If not, __name__ will be asigned file's name as its value
 if __name__ == '__main__':
   server_app.run(host='0.0.0.0', port=5060)

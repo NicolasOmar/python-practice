@@ -96,6 +96,8 @@ python3 exercise.py # Or any .py file
   - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
 - Modules and HTTP (folder `8-modules-and-http`):
   - How to install packages from [pip](https://pypi.org/) network such as [pycryptodome](https://pypi.org/project/pycryptodome/)
+  - How to set-up an python environment using [Anaconda](https://anaconda.org/)
+  - Learn how to set-up a RESTful server using [flask](https://flask.palletsprojects.com/en/stable/)
 
 ## Other practice repos
 | Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
