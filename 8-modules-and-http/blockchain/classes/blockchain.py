@@ -40,19 +40,20 @@ class Blockchain:
                 file_content = f.readlines()
                 
                 blockchain = json.loads(file_content[0])
+                open_transactions = json.loads(file_content[1])
                 updated_blockchain = []
                 updated_transactions = []
                 
                 for current_block in blockchain:
-                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in current_block.transactions]
+                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in current_block['transactions']]
                     updated_block = Block(
-                        current_block.proof,
-                        current_block.previous_hash,
+                        current_block['proof'],
+                        current_block['previous_hash'],
                         block_transactions,
-                        current_block.proof)
+                        current_block['proof'])
                     updated_blockchain.append(updated_block)
 
-                for tx in current_block.transactions:
+                for tx in open_transactions:
                     updated_transaction = Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount'])
                     updated_transactions.append(updated_transaction)
                     
@@ -74,6 +75,9 @@ class Blockchain:
             f.write(json.dumps(savable_transactions))
 
     def get_balance(self):
+        if self.hosting_id == None:
+            return None
+        
         participant = self.hosting_id
         tx_sender = [[tx.amount for tx in block.transactions
                       if tx.sender == participant] for block in self.__chain]
@@ -115,10 +119,13 @@ class Blockchain:
             return True
         else:
             return False
+        
+    def get_open_transactions(self):
+        return self.__open_transactions[:]
 
     def mine_block(self):
         if self.hosting_id == None:
-            return False
+            return None
         
         last_block = self.__chain[-1]
         hashed_block = hash_block(last_block)
@@ -137,9 +144,11 @@ class Blockchain:
         self.__chain.append(new_block)
         self.__open_transactions = []
         self.save_data()
+        
         print('Block added!')
         add__line()
-        return True
+
+        return new_block
     
     def proof_of_work(self):
         last_block = self.__chain[-1]

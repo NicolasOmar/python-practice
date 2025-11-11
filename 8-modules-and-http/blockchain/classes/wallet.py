@@ -25,10 +25,13 @@ class Wallet:
       try:
         with open('wallet.txt', mode='w') as wf:
           wf.write(self.public_key)
-          wf.write('/n')
+          wf.write('\n')
           wf.write(self.private_key)
+          
+          return True
       except (IOError, IndexError):
         print('Error saving wallet...')
+        return False
 
   def load_keys(self):
     with open('wallet.txt', mode='r') as wf:
@@ -37,12 +40,15 @@ class Wallet:
         keys = wf.readlines()
         # On this line you are reading the whole line, including the line jump (/n)
         # To remove that line, you select the whole copy of the list except the last item (the line jump)
-        public_key = (keys[0][:-1])
-        private_key = (keys[1])
+        public_key = keys[0][:-1]
+        private_key = keys[1]
         self.public_key = public_key
         self.private_key = private_key
+
+        return True
       except (IOError, IndexError):
         print('Error loading wallet...')
+        return False
 
   def generate_keys(self):
     # On this part, you create a key generating an RSA key with
