@@ -163,6 +163,46 @@ def get_balance():
     }
 
     return jsonify(error_response), 500
+  
+@server_app.route('/node', methods=['POST'])
+def add_node():
+  form_values = request.get_json()
+
+  if not form_values:
+    error_message = { 'message': 'No data attached' }
+    return jsonify(error_message), 400
+  print(form_values)
+  if 'node' not in form_values:
+    error_message = { 'message': 'No node data founded' }
+    return jsonify(error_message), 400
+  
+  node_value = form_values['node']
+  server_blockchain.add_peer_node(node_value)
+
+  success_response = {
+    'message': 'Node added successfully',
+    'all_nodes': server_blockchain.get_all_nodes()
+  }
+  return jsonify(success_response), 201
+
+@server_app.route('/node/<node_url>', methods=['DELETE'])
+def remove_node(node_url):
+  if node_url == '' or node_url == None:
+    error_response = { 'message': 'No node url provided' }
+    return jsonify(error_response), 400
+  
+  server_blockchain.remove_peer_node(node_url)
+  success_response = {
+    'message': 'Node removed',
+    'all_nodes': server_blockchain.get_all_nodes()
+  }
+  return jsonify(success_response), 200
+
+@server_app.route('/nodes', methods=['GET'])
+def get_nodes():
+  nodes_response = { 'all_nodes': server_blockchain.get_all_nodes() }
+  return jsonify(nodes_response), 200
+
 
 # At the bottom of the file, you can run the API if the program is beign run
 # from this file (which will give the __name__ variable the name __main__)

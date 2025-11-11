@@ -10,11 +10,14 @@ from utils import hash_block, add__line
 MINING_REWARD = 10
 
 class Blockchain:
-    def __init__(self, node_hosting_id):
+    def __init__(self, public_key):
         genesis_block = Block(0, '', [], 100)
-        self.hosting_id = node_hosting_id
+        self.public_key = public_key
         self.chain = [genesis_block]
         self.open_transactions = []
+        # You create a set of nodes to include unique values (which will not be added
+        # if are repeated)
+        self.peer_nodes = set()
         self.load_data()
     
     @property
@@ -33,38 +36,6 @@ class Blockchain:
     def open_transactions(self, val):
         self.__open_transactions = val
     
-        
-    def load_data(self):
-        try:
-            with open('blockchain.txt', mode='r') as f:
-                file_content = f.readlines()
-                
-                blockchain = json.loads(file_content[0])
-                open_transactions = json.loads(file_content[1])
-                updated_blockchain = []
-                updated_transactions = []
-                
-                for current_block in blockchain:
-                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in current_block['transactions']]
-                    updated_block = Block(
-                        current_block['proof'],
-                        current_block['previous_hash'],
-                        block_transactions,
-                        current_block['proof'])
-                    updated_blockchain.append(updated_block)
-
-                for tx in open_transactions:
-                    updated_transaction = Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount'])
-                    updated_transactions.append(updated_transaction)
-                    
-                self.chain = updated_blockchain
-                self.open_transactions = updated_transactions
-        except (IOError, IndexError):
-            # Exception logic has been handled in class initializer
-            pass
-        finally:
-            print('Cleanup')
-
     def save_data(self):
         savable_chain = [block.__dict__ for block in [Block(block_el.index, block_el.previous_hash, [tx.__dict__ for tx in block_el.transactions], block_el.proof, block_el.timestamp) for block_el in self.__chain]]
         savable_transactions = [tx.__dict__ for tx in self.__open_transactions]
@@ -73,12 +44,51 @@ class Blockchain:
             f.write(json.dumps(savable_chain))
             f.write('\n')
             f.write(json.dumps(savable_transactions))
+            f.write('\n')
+            # Whey you create the file (or save it), you change the peer nodes to a list
+            # as another list of information to be saved
+            f.write(json.dumps(list(self.peer_nodes)))
+        
+    def load_data(self):
+        try:
+            with open('blockchain.txt', mode='r') as f:
+                file_content = f.readlines()
+                
+                loaded_blockchain = json.loads(file_content[0])
+                loaded_open_transactions = json.loads(file_content[1])
+                # When you load the file, its third line now will be all the loaded peer lines
+                loaded_peer_nodes = json.loads(file_content[2])
+                updated_blockchain = []
+                updated_transactions = []
+                
+                for current_block in loaded_blockchain:
+                    block_transactions = [Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in current_block['transactions']]
+                    updated_block = Block(
+                        current_block['proof'],
+                        current_block['previous_hash'],
+                        block_transactions,
+                        current_block['proof'])
+                    updated_blockchain.append(updated_block)
+
+                for tx in loaded_open_transactions:
+                    updated_transaction = Transaction(tx['sender'], tx['recipient'], tx['signature'], tx['amount'])
+                    updated_transactions.append(updated_transaction)
+                    
+                self.chain = updated_blockchain
+                self.open_transactions = updated_transactions
+                # After loading them, you adjust them again as a set of values instead a list
+                self.peer_nodes = set(loaded_peer_nodes)
+        except (IOError, IndexError):
+            # Exception logic has been handled in class initializer
+            pass
+        finally:
+            print('Cleanup')
 
     def get_balance(self):
-        if self.hosting_id == None:
+        if self.public_key == None:
             return None
         
-        participant = self.hosting_id
+        participant = self.public_key
         tx_sender = [[tx.amount for tx in block.transactions
                       if tx.sender == participant] for block in self.__chain]
         open_tx_sender = [tx.amount
@@ -108,7 +118,7 @@ class Blockchain:
                 :recipient: The recipient of the coins.
                 :amount: The amount of the transaction.
         """
-        if self.hosting_id == None:
+        if self.public_key == None:
             return False
         
         new_transaction = Transaction(sender, recipient, signature, amount)
@@ -124,14 +134,14 @@ class Blockchain:
         return self.__open_transactions[:]
 
     def mine_block(self):
-        if self.hosting_id == None:
+        if self.public_key == None:
             return None
         
         last_block = self.__chain[-1]
         hashed_block = hash_block(last_block)
         proof_of_work_value = self.proof_of_work()
         
-        reward_transaction = Transaction('MINING', self.hosting_id, '', MINING_REWARD)
+        reward_transaction = Transaction('MINING', self.public_key, '', MINING_REWARD)
 
         transactions = self.__open_transactions.copy()
         transactions.append(reward_transaction)
@@ -157,3 +167,14 @@ class Blockchain:
         while not Verification.valid_proof(self.__open_transactions, hash_last_block, proof):
             proof += 1
         return proof
+    
+    def add_peer_node(self, node):
+        self.peer_nodes.add(node)
+        self.save_data()
+
+    def remove_peer_node(self, node):
+        self.peer_nodes.discard(node)
+        self.save_data()
+
+    def get_all_nodes(self):
+        return list(self.peer_nodes)
