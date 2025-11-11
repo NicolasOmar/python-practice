@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from classes.wallet import Wallet
 from classes.blockchain import Blockchain
@@ -14,7 +14,7 @@ CORS(server_app)
 
 @server_app.route('/', methods=['GET'])
 def get_ui():
-  return 'Ping! This thing works!'
+  return send_from_directory('ui', 'node.html')
 
 # Each route is referenced to the created Flask ([server_app] variable)
 # Its first argument is related to the route we are opening to the public
