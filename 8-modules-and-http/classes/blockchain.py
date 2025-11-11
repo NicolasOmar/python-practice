@@ -1,5 +1,6 @@
 import functools
 import json
+import requests
 # CLASS IMPORTS
 from classes.block import Block
 from classes.transaction import Transaction
@@ -10,7 +11,7 @@ from utils import hash_block, add__line
 MINING_REWARD = 10
 
 class Blockchain:
-    def __init__(self, public_key):
+    def __init__(self, public_key, node_id):
         genesis_block = Block(0, '', [], 100)
         self.public_key = public_key
         self.chain = [genesis_block]
@@ -18,6 +19,7 @@ class Blockchain:
         # You create a set of nodes to include unique values (which will not be added
         # if are repeated)
         self.peer_nodes = set()
+        self.node_id = node_id
         self.load_data()
     
     @property
@@ -40,7 +42,7 @@ class Blockchain:
         savable_chain = [block.__dict__ for block in [Block(block_el.index, block_el.previous_hash, [tx.__dict__ for tx in block_el.transactions], block_el.proof, block_el.timestamp) for block_el in self.__chain]]
         savable_transactions = [tx.__dict__ for tx in self.__open_transactions]
 
-        with open('blockchain.txt', mode='w') as f:
+        with open(f'blockchain-{self.node_id}.txt', mode='w') as f:
             f.write(json.dumps(savable_chain))
             f.write('\n')
             f.write(json.dumps(savable_transactions))
@@ -51,7 +53,7 @@ class Blockchain:
         
     def load_data(self):
         try:
-            with open('blockchain.txt', mode='r') as f:
+            with open(f'blockchain-{self.node_id}.txt', mode='r') as f:
                 file_content = f.readlines()
                 
                 loaded_blockchain = json.loads(file_content[0])
@@ -84,9 +86,13 @@ class Blockchain:
         finally:
             print('Cleanup')
 
-    def get_balance(self):
-        if self.public_key == None:
-            return None
+    def get_balance(self, sender=None):
+        if sender == None:
+            if self.public_key == None:
+                return None
+            participant = self.public_key
+        else:
+            participant = sender
         
         participant = self.public_key
         tx_sender = [[tx.amount for tx in block.transactions
@@ -109,7 +115,7 @@ class Blockchain:
         
         return self.__chain[-1]
     
-    def add_transaction(self, recipient, sender, signature, amount=1.0):
+    def add_transaction(self, recipient, sender, signature, amount=1.0, is_receiving=False):
         """
             Add a new transaction to the list of open transactions (which will be added to the next mined block)
 
@@ -118,14 +124,25 @@ class Blockchain:
                 :recipient: The recipient of the coins.
                 :amount: The amount of the transaction.
         """
-        if self.public_key == None:
-            return False
-        
         new_transaction = Transaction(sender, recipient, signature, amount)
 
         if Verification.verify_transaction(new_transaction, self.get_balance):
             self.__open_transactions.append(new_transaction)
             self.save_data()
+
+            if not is_receiving:
+                for peer_node_url in self.peer_nodes:
+                    broadcast_url = f'http://{peer_node_url}/broadcast-transaction'
+                    transaction_payload = { 'sender': sender, 'recipient': recipient, 'signature': signature, 'amount': amount }
+                    
+                    try:
+                        internal_response = requests.post(broadcast_url, json=transaction_payload)
+
+                        if internal_response.status_code == 400 or internal_response.status_code == 500:
+                            print('Transaction declined, needs resolving')
+                            return False
+                    except requests.exceptions.ConnectionError:
+                        continue
             return True
         else:
             return False
@@ -154,11 +171,47 @@ class Blockchain:
         self.__chain.append(new_block)
         self.__open_transactions = []
         self.save_data()
-        
-        print('Block added!')
-        add__line()
+
+        for node_url in self.peer_nodes:
+            try:
+                broadcast_url = f'http://{node_url}/broadcast-block'
+                block_dict = new_block.__dict__.copy()
+                block_dict['transactions'] = [tx.__dict__ for tx in block_dict['transactions']]
+
+                internal_response = requests.post(broadcast_url, json={ 'block': block_dict })
+
+                if internal_response.status_code == 400 or internal_response.status_code == 500:
+                    print('Block declined, needs resolving')
+                    return False
+            except requests.exceptions.ConnectionError:
+                continue
 
         return new_block
+    
+    def add_block(self, new_block):
+        transaction_list = [Transaction(
+            tx['sender'],
+            tx['recipient'],
+            tx['signature'],
+            tx['amount']
+        ) for tx in new_block['transactions']]
+        proof_is_valid = Verification.valid_proof(transaction_list[-1], new_block['previous_hash'], new_block['proof'])
+        hashes_match = hash_block(self.chain[-1]) == new_block['previous_hash']
+
+        if not proof_is_valid or not hashes_match:
+            return False
+        
+        converted_block = Block(
+            new_block['index'],
+            new_block['previous_hash'],
+            transaction_list,
+            new_block['proof'],
+            new_block['timestamp'])
+        
+        self.__chain.append(converted_block)
+        self.save_data()
+
+        return True
     
     def proof_of_work(self):
         last_block = self.__chain[-1]

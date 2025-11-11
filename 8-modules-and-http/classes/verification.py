@@ -1,5 +1,6 @@
 # OTHER IMPORTS
 from utils import hash_block, hash_string_256
+from classes.wallet import Wallet
 
 class Verification:
   @classmethod
@@ -16,12 +17,12 @@ class Verification:
     return True
   
   @staticmethod
-  def verify_transaction(transaction, get_balance):
-    sender_balance = get_balance()
-    
-    if sender_balance >= transaction.amount:
-        return True
-    return False
+  def verify_transaction(transaction, get_balance, check_funds=True):
+    if check_funds:
+      sender_balance = get_balance(transaction.sender)
+      return sender_balance >= transaction.amount and Wallet.verify_transaction(transaction)
+    else:
+      Wallet.verify_transaction(transaction)
   
   @classmethod
   def verify_transactions(self, open_transactions):

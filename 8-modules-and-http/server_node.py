@@ -7,8 +7,6 @@ from classes.blockchain import Blockchain
 # If you start the proyect from this file, __name__ will be '__main__'
 # Otherwise, it will the name of the file you assigned this line
 server_app = Flask(__name__)
-server_wallet = Wallet()
-server_blockchain = Blockchain(server_wallet.public_key)
 # This will make our server open to outside callings
 CORS(server_app)
 
@@ -26,7 +24,7 @@ def create_keys():
   if server_wallet.save_keys():
     global server_blockchain
 
-    server_blockchain = Blockchain(server_wallet.public_key)
+    server_blockchain = Blockchain(server_wallet.public_key, server_port)
     correct_response = {
       'public_key': server_wallet.public_key,
       'private_key': server_wallet.private_key,
@@ -46,7 +44,7 @@ def load_keys():
   if server_wallet.load_keys():
     global server_blockchain
 
-    server_blockchain = Blockchain(server_wallet.public_key)
+    server_blockchain = Blockchain(server_wallet.public_key, server_port)
     correct_response = {
       'public_key': server_wallet.public_key,
       'private_key': server_wallet.private_key,
@@ -100,6 +98,7 @@ def add_transaction():
     success_response = {
       'message': 'Creating a transaction success',
       'transaction': {
+        'sender': server_wallet.public_key,
         'recipient': recipient,
         'amount': amount,
         'signature': signature
@@ -110,6 +109,71 @@ def add_transaction():
   else:
     error_response = { 'message': 'Creating a transaction failed' }
     return jsonify(error_response), 500
+
+@server_app.route('/broadcast-transaction', methods=['POST'])
+def broadcast_transaction():
+  transaction_data = request.get_json()
+
+  if not transaction_data:
+    error_response = { 'message': 'No data found.' }
+    return jsonify(error_response), 400
+  
+  required_fields = ['sender', 'recipient', 'signature', 'amount']
+
+  if not all(key in transaction_data for key in required_fields):
+    error_response = { 'message': 'Required data missing.' }
+    return jsonify(error_response), 400
+  
+  broadcast_response = server_blockchain.add_transaction(
+    transaction_data['recipient'],
+    transaction_data['sender'],
+    transaction_data['signature'],
+    transaction_data['amount'],
+    True
+  )
+  
+  if broadcast_response:
+    success_response = {
+      'message': 'Transaction boradcasting success',
+      'transaction': {
+        'sender': transaction_data['sender'],
+        'recipient': transaction_data['recipient'],
+        'amount': transaction_data['amount'],
+        'signature': transaction_data['signature']
+      }
+    }
+    return jsonify(success_response), 201
+  else:
+    error_response = { 'message': 'Transaction boradcasting failed' }
+    return jsonify(error_response), 500
+  
+@server_app.route('/broadcast-block', methods=['POST'])
+def broadcast_block():
+  block_data = request.get_json()
+
+  if not block_data:
+    error_response = { 'message': 'No data found.' }
+    return jsonify(error_response), 400
+
+  if 'block' not in block_data:
+    error_response = { 'message': 'Required data missing.' }
+    return jsonify(error_response), 400
+  
+  block = block_data['block']
+
+  if block['index'] == server_blockchain.chain[-1].index + 1:
+    if server_blockchain.add_block(block):
+      success_response = { 'message': 'Block added' }
+      return jsonify(success_response), 201
+    else:
+      error_message = { 'message': 'Block seems invalid' }
+      return jsonify(error_message), 500
+  elif block['index'] > server_blockchain.chain[-1].index:
+    pass
+  else:
+    error_response = { 'message': 'Blockchain seems to be shorter, block not added' }
+    return jsonify(error_response), 409
+   
 
 
 @server_app.route('/mine', methods=['POST'])
@@ -203,9 +267,20 @@ def get_nodes():
   nodes_response = { 'all_nodes': server_blockchain.get_all_nodes() }
   return jsonify(nodes_response), 200
 
-
 # At the bottom of the file, you can run the API if the program is beign run
 # from this file (which will give the __name__ variable the name __main__)
 # If not, __name__ will be asigned file's name as its value
 if __name__ == '__main__':
-  server_app.run(host='0.0.0.0', port=5060)
+# This block of code is first bringing a class called ArgumentParser to obtain new arguments
+  # from the script invocation
+  from argparse import ArgumentParser
+  parser = ArgumentParser()
+  # On this part, we are adding a new argument type called -p or --port, which is type integer and
+  # starts with 5001
+  parser.add_argument('-p', '--port', type=int, default=5001)
+  args = parser.parse_args()
+  server_port = args.port
+  server_wallet = Wallet(server_port)
+  server_blockchain = Blockchain(server_wallet.public_key, server_port)
+
+  server_app.run(host='0.0.0.0', port=server_port)
