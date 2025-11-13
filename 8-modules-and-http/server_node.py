@@ -167,9 +167,11 @@ def broadcast_block():
       return jsonify(success_response), 201
     else:
       error_message = { 'message': 'Block seems invalid' }
-      return jsonify(error_message), 500
+      return jsonify(error_message), 409 # 409 is HTTP code for conflict (accorded to blockchain issues)
   elif block['index'] > server_blockchain.chain[-1].index:
-    pass
+    error_response = { 'message': 'Blockchain seems to differ from local blockchain' }
+    server_blockchain.resolve_conflicts = True
+    return jsonify(error_response), 200
   else:
     error_response = { 'message': 'Blockchain seems to be shorter, block not added' }
     return jsonify(error_response), 409
@@ -178,6 +180,10 @@ def broadcast_block():
 
 @server_app.route('/mine', methods=['POST'])
 def mine():
+  if server_blockchain.resolve_conflicts is True:
+    error_response = { 'message': 'Resolve conflicts first. Block not mined' }
+    jsonify(error_response), 409
+
   mined_block = server_blockchain.mine_block()
     
   if mined_block != None:
@@ -198,6 +204,17 @@ def mine():
     }
 
     return jsonify(error_response), 500
+
+@server_app.route('/resolve-conflicts', methods=['POST'])
+def resolve_conflicts():
+  chain_replaced = server_blockchain.resolve()
+
+  if chain_replaced:
+    response = { 'message': 'Chain has been replaced'}
+  else:
+    response = { 'message': 'Local chain kept!'}
+
+  return jsonify(response), 200
 
 @server_app.route('/chain', methods={'GET'})
 def get_chain():

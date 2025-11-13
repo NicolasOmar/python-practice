@@ -20,6 +20,7 @@ class Blockchain:
         # if are repeated)
         self.peer_nodes = set()
         self.node_id = node_id
+        self.resolve_conflicts = False
         self.load_data()
     
     @property
@@ -182,7 +183,8 @@ class Blockchain:
 
                 if internal_response.status_code == 400 or internal_response.status_code == 500:
                     print('Block declined, needs resolving')
-                    return False
+                if internal_response.status_code == 409:
+                    self.resolve_conflicts = True
             except requests.exceptions.ConnectionError:
                 continue
 
@@ -209,6 +211,16 @@ class Blockchain:
             new_block['timestamp'])
         
         self.__chain.append(converted_block)
+        stored_transactions = self.__open_transactions[:]
+
+        for incoming_tx in new_block['transactions']:
+            for open_tx in stored_transactions:
+                if open_tx.sender ==  incoming_tx['sender'] and open_tx.recipient ==  incoming_tx['recipient'] and open_tx.signature ==  incoming_tx['signature']:
+                    try:
+                        self.__open_transactions.remove(open_tx)
+                    except:
+                        print('Item was already removed')
+
         self.save_data()
 
         return True
@@ -221,6 +233,47 @@ class Blockchain:
             proof += 1
         return proof
     
+    def resolve(self):
+        winner_chain = self.chain
+        chain_has_been_replaced = False
+
+        for node in self.peer_nodes:
+            url = f'http://{node}/chain'
+            try:
+                chain_response = requests.post(url)
+                node_chain = chain_response.json()
+                node_chain = [Block(
+                    block['index'],
+                    block['previous_hash'],
+                    [Transaction(
+                        block_tx['sender'],
+                        block_tx['recipient'],
+                        block_tx['signature'],
+                        block_tx['amount']
+                    ) for block_tx in block['transactions']],
+                    block['proof'],
+                    block['timestamp'],
+                ) for block in node_chain]
+
+                node_chain_length = len(node_chain)
+                local_chain_length = len(winner_chain)
+
+                if node_chain_length > local_chain_length and Verification.verify_chain(node_chain):
+                    winner_chain = node_chain
+                    chain_has_been_replaced = True
+            except requests.exceptions.ConnectionError:
+                continue
+        
+        self.resolve_conflicts = False
+        self.chain = winner_chain
+
+        if chain_has_been_replaced:
+            self.open_transactions = []
+
+        self.save_data()
+        
+        return chain_has_been_replaced
+
     def add_peer_node(self, node):
         self.peer_nodes.add(node)
         self.save_data()

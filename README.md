@@ -11,29 +11,23 @@ Repository created to record my practice learning Python with exercises based on
 
 ## Status
 - Current repo's version is ![Python practice version](https://img.shields.io/github/package-json/v/nicolasomar/python-practice?color=success&label=%20&style=flat-square)
-
-### What does that version number mean?
-| Number | Meaning |
-| ------ | ------ |
-| `X.0.0` | How many exercises I have completed |
-| `0.X.0` | How many times I made progress on my next exercise |
-| `0.0.X` | Dependencies version updates and specific patches while the course is not completed |
+- **This course has been completed on 12/11/2025 - [Certificate](https://www.udemy.com/certificate/UC-e8b58b81-9b70-4588-9552-2f3d0dd38bed/)**
 
 ## Requirements
  - [Python](https://www.python.org/downloads/) `v3` or above
+ - [Anaconda](https://www.anaconda.com/download).
+  - Once you installed the tool and its python enviroment, install the following packages
+    - pycryptodome
+    - flask
 
 ## Setup
 After cloning the repo, go to the created folder and install the check its content.
 ```sh
 git clone https://github.com/NicolasOmar/python-practice.git
 cd python-practice
-cd 7-object-oriented
-pip install pycryptodome
-cd ../8-modules-and-http
-pip install pycryptodome
 ```
 
-> Some exercises need install of third-party packages such as [pycryptodome](https://pypi.org/project/pycryptodome/)
+> Some exercises need install of mentioned third-party packages in [Requirements](#requirements).
 
 ## How to run it
 Each folder might have the following files:
@@ -95,7 +89,7 @@ python3 exercise.py # Or any .py file
   - How to implement and execute classes with `class` and `static methods`.
   - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
 - Modules and HTTP (folder `8-modules-and-http`):
-  - How to install packages from [pip](https://pypi.org/) network such as [pycryptodome](https://pypi.org/project/pycryptodome/)
+  - How to install and implement packages from [pip](https://pypi.org/) network such as [pycryptodome](https://pypi.org/project/pycryptodome/)
   - How to set-up an python environment using [Anaconda](https://anaconda.org/)
   - Learn how to set-up a RESTful server using [flask](https://flask.palletsprojects.com/en/stable/)
 
