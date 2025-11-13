@@ -1,3 +1,21 @@
+# [8.0.0](https://github.com/NicolasOmar/python-practice/compare/v7.0.0...v8.0.0) (2025-11-13)
+
+
+### Bug Fixes
+
+* How to install packages from pip network such as pycryptodome ([418ad1c](https://github.com/NicolasOmar/python-practice/commit/418ad1c3f65886694b33005f16ae4871ce9a9ccb))
+* Learn how to set-up a RESTful server using flask ([f20aa43](https://github.com/NicolasOmar/python-practice/commit/f20aa43f8ee562d074af4688f9197e52705c1b6e))
+
+
+### Features
+
+* Exercise [#8](https://github.com/NicolasOmar/python-practice/issues/8). Modules and HTTP ([9cb4b76](https://github.com/NicolasOmar/python-practice/commit/9cb4b76b206fd34f588fd1c8b2b8ef365ae0463e))
+
+
+### BREAKING CHANGES
+
+* Last exercise added
+
 # [7.0.0](https://github.com/NicolasOmar/python-practice/compare/v6.0.0...v7.0.0) (2025-11-07)
 
 
