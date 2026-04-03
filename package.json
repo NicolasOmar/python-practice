@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "description": "Repository created to record my practice learning NextJs",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NicolasOmar/python-practice.git"
