@@ -16,7 +16,7 @@ Repository created to record my practice learning Python with exercises based on
 ## Requirements
  - [Python](https://www.python.org/downloads/) `v3` or above
  - [Anaconda](https://www.anaconda.com/download).
-  - Once you installed the tool and its python enviroment, install the following packages
+  - Once you have installed the tool and its Python environment, install the following packages
     - pycryptodome
     - flask
 
@@ -27,15 +27,15 @@ git clone https://github.com/NicolasOmar/python-practice.git
 cd python-practice
 ```
 
-> Some exercises need install of mentioned third-party packages in [Requirements](#requirements).
+> Some exercises need installation of the mentioned third-party packages in [Requirements](#requirements).
 
 ## How to run it
 Each folder might have the following files:
 - `theory.py` for concepts explanation.
-- `blockchain.py` for improvements in course's main exercise.
-- `exercise.py` related to subject's learned lessons.
+- `blockchain.py` for improvements in the course's main exercise.
+- `exercise.py` related to the subject's learned lessons.
 
-> There are some cases where the files are extended as folders due its structure has been increased
+> There are some cases where the files are extended as folders due to their structure having increased
 
 To run any specific exercise, execute the following command in the project´s folder:
 ```python
@@ -43,44 +43,44 @@ cd folder_name
 python3 exercise.py # Or any .py file
 ```
 
-## Repo structure & what i learned in each exercise
+## Repo structure & what I learned in each exercise
 - Basics (`1-basics` folder)
   - Understanding of Core concepts such as:
     - `variables`.
     - value `types`.
-    - how to handle `numbers` (integers and float), `strings` and `lists`.
+    - how to handle `numbers` (integers and floats), `strings`, and `lists`.
     - `functions`, how to handle `default values` and `keyword arguments`.
     - variable scope and differences between local and global types.
   - Using `Doc strings` to document code.
 - Loops (`2-loops` folder)
   - Understanding how to use `for` loops.
-    - Also how to handle list index by `range` function.
+    - Also, how to handle the list index using the `range` function.
   - Understanding how to use `while` loops.
   - Understanding how to use `if/else` and `elif` conditionals.
   - Understanding how to use `break` and `continue` words.
-  - Undesrtanding the usage of `None` value.
-  - Undesrtanding the `not` keyword.
+  - Understanding the usage of the `None` value.
+  - Understanding the `not` keyword.
 - Complex Data Structures (`3-data-structures` folder):
   - How to use `tuples`.
-  - How to use `lists`
+  - How to use `lists.`
     - How to create modified lists with `comprehension lists`.
-    - How to make copies from another list and understanding the differece between `copy by reference` and `by value`.
-    - How to check value validity (if is true) with methods such as `all` or `any`.
+    - How to make copies from another list and understand the difference between `copy by reference` and `by value`.
+    - How to check value validity (if it is true) with methods such as `all` or `any`.
   - How to use `set`.
   - Use built-in converter methods like `enumerate`.
 - Functions and Strings (`4-functions-and-strings` folder)
-  - How to use `format` method for strings.
+  - How to use the `format` method for strings.
   - How to use string interpolation with the `f` method.
-  - How to map lists with map method and `lambda functions`.
-  - How to summarize data with `reduce` method.
+  - How to map lists with the map method and `lambda functions`.
+  - How to summarize data with the `reduce` method.
 - Standard Library (`5-standard-library` folder)
   - Understanding the ways to import built-in functions from [Python Standard Library](https://docs.python.org/3/library/index.html).
-  - Learn how to split functions in other files and import them.
+  - Learn how to split functions into other files and import them.
 - File management (`6-file-management` folder)
-  - Learn how to `open`, `close`, `write` and `read` a file.
+  - Learn how to `open`, `close`, `write`, and `read` a file.
   - Learn how to handle multiline texts (by writing and reading them).
-  - Learn how to handle better the open/close file logic using `with` statement.
-- Object oriented programming (`7-object-oriented` folder)
+  - Learn how to handle the open/close file logic better using the `with` statement.
+- Object-oriented programming (`7-object-oriented` folder)
   - Learn how to create a `class` with its `properties` and its `methods` and call them from an `instance`.
   - How to assign object values in creation with `class constructor`.
   - Basic understanding of built-in class methods such as `__dict__`.
@@ -90,10 +90,10 @@ python3 exercise.py # Or any .py file
   - How to implement a better encapsulation using `properties` for `getter` and `setter methods`.
 - Modules and HTTP (folder `8-modules-and-http`):
   - How to install and implement packages from [pip](https://pypi.org/) network such as [pycryptodome](https://pypi.org/project/pycryptodome/)
-  - How to set-up an python environment using [Anaconda](https://anaconda.org/)
-  - Learn how to set-up a RESTful server using [flask](https://flask.palletsprojects.com/en/stable/)
+  - How to set up a Python environment using [Anaconda](https://anaconda.org/)
+  - Learn how to set up a RESTful server using [flask](https://flask.palletsprojects.com/en/stable/)
 
 ## Other practice repos
-| Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJs | Docker |
+| Node | React | Angular | GraphQL | HTML & CSS | Styling | Typescript | NextJS | NestJS |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [<img src="https://cdn.simpleicons.org/node.js" title="Node Practice Repo" alt="Node Practice Repo" width="48px">](https://github.com/NicolasOmar/node-practice) | [<img src="https://cdn.simpleicons.org/react" title="React Practice Repo" alt="React Practice Repo" width="48px">](https://github.com/NicolasOmar/react-practice) | [<img src="https://cdn.simpleicons.org/angular" title="Angular Practice Repo" alt="Angular Practice Repo" width="48px">](https://github.com/NicolasOmar/angular-practice) | [<img src="https://cdn.simpleicons.org/graphql" title="GraphQL Practice Repo" alt="GraphQL Practice Repo" width="48px">](https://github.com/NicolasOmar/graphql-practice) | [<img src="https://cdn.simpleicons.org/html5" title="HTML and CSS Practice Repo" alt="HTML and CSS Practice Repo" width="48px">](https://github.com/NicolasOmar/html-css-practice) | [<img src="https://cdn.simpleicons.org/sass" title="Styling Practice Repo" alt="Styling Practice Repo" width="48px">](https://github.com/NicolasOmar/styling-practice) | [<img src="https://cdn.simpleicons.org/typescript" title="Typescript Practice Repo" alt="Typescript Practice Repo" width="48px">](https://github.com/NicolasOmar/typescript-practice) | [<img src="https://cdn.simpleicons.org/nextdotjs" title="NextJs Practice Repo" alt="NextJs Practice Repo" width="48px">](https://github.com/NicolasOmar/next-practice) | [<img src="https://cdn.simpleicons.org/docker" title="Docker Practice Repo" alt="Docker Practice Repo" width="48px">](https://github.com/NicolasOmar/docker-practice) |
+| [<img src="https://cdn.simpleicons.org/node.js" title="Node Practice Repo" alt="Node Practice Repo" width="48px">](https://github.com/NicolasOmar/node-practice) | [<img src="https://cdn.simpleicons.org/react" title="React Practice Repo" alt="React Practice Repo" width="48px">](https://github.com/NicolasOmar/react-practice) | [<img src="https://cdn.simpleicons.org/angular" title="Angular Practice Repo" alt="Angular Practice Repo" width="48px">](https://github.com/NicolasOmar/angular-practice) | [<img src="https://cdn.simpleicons.org/graphql" title="GraphQL Practice Repo" alt="GraphQL Practice Repo" width="48px">](https://github.com/NicolasOmar/graphql-practice) | [<img src="https://cdn.simpleicons.org/html5" title="HTML and CSS Practice Repo" alt="HTML and CSS Practice Repo" width="48px">](https://github.com/NicolasOmar/html-css-practice) | [<img src="https://cdn.simpleicons.org/sass" title="Styling Practice Repo" alt="Styling Practice Repo" width="48px">](https://github.com/NicolasOmar/styling-practice) | [<img src="https://cdn.simpleicons.org/typescript" title="Typescript Practice Repo" alt="Typescript Practice Repo" width="48px">](https://github.com/NicolasOmar/typescript-practice) | [<img src="https://cdn.simpleicons.org/nextdotjs" title="NextJS Practice Repo" alt="NextJS Practice Repo" width="48px">](https://github.com/NicolasOmar/next-practice) |[<img src="https://cdn.simpleicons.org/nestjs" title="NestJS Practice Repo" alt="NestJS Practice Repo" width="48px">](https://github.com/NicolasOmar/nest-practice) |
